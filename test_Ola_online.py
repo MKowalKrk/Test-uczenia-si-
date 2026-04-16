@@ -3,43 +3,51 @@ import streamlit as st
 # Konfiguracja strony pod urządzenia mobilne
 st.set_page_config(page_title="Test na style uczenia się", layout="centered")
 
-# Maksymalnie agresywny CSS, aby wymusić zawijanie tekstu i powiększenie pola
+# Najsilniejszy możliwy CSS do wymuszenia zawijania tekstu
 st.markdown(
     """
     <style>
-    /* 1. Zawijanie tekstu wewnątrz wybranych opcji (tagów) */
-    span[data-baseweb="tag"] {
+    /* 1. Całkowite wyłączenie ucinania tekstu i wielokropka (...) */
+    .stMultiSelect div, .stMultiSelect span {
         white-space: normal !important;
-        height: auto !important;
-        min-height: 30px !important;
-        padding: 5px 10px !important;
-        display: inline-flex !important;
-    }
-    
-    /* 2. Usunięcie ucinania tekstu i wielokropka (...) wewnątrz tagów */
-    span[data-baseweb="tag"] > span:first-child {
-        overflow: visible !important;
         text-overflow: clip !important;
-        white-space: normal !important;
+        overflow: visible !important;
+        word-break: break-word !important;
+    }
+
+    /* 2. Wymuszenie zawijania wewnątrz pigułek (tagów) */
+    span[data-baseweb="tag"] {
+        height: auto !important;
+        min-height: 2.5rem !important;
+        padding-top: 4px !important;
+        padding-bottom: 4px !important;
+        display: flex !important;
+    }
+
+    /* 3. Naprawa kontenera tekstu wewnątrz tagu */
+    span[data-baseweb="tag"] > span:first-child {
         display: block !important;
+        line-height: 1.2 !important;
         width: 100% !important;
     }
 
-    /* 3. Powiększenie głównego pola wyboru, aby dopasowało się do zawartości */
+    /* 4. Zwiększenie wysokości głównego pola wyboru */
     div[data-baseweb="select"] > div {
         height: auto !important;
-        min-height: 45px !important;
+        min-height: 3rem !important;
+        flex-wrap: wrap !important;
     }
 
-    /* 4. Zawijanie tekstu na liście rozwijanej (podpowiedzi) */
-    div[role="option"] > div {
-        white-space: normal !important;
+    /* 5. Zawijanie tekstu na liście opcji przed wyborem */
+    div[role="option"] {
         line-height: 1.4 !important;
+        padding-top: 10px !important;
+        padding-bottom: 10px !important;
     }
     
-    /* Dodatkowe wyrównanie dla urządzeń mobilnych */
-    .stMultiSelect {
-        margin-bottom: 20px;
+    /* 6. Usunięcie sztywnej wysokości wiersza wewnątrz pól */
+    [data-testid="stMultiSelect"] {
+        line-height: normal !important;
     }
     </style>
     """,

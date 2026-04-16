@@ -1,7 +1,7 @@
 import streamlit as st
 
 # Konfiguracja strony pod urządzenia mobilne
-st.set_page_config(page_title="Test na style uczenia się: dzień otwarty 18.04.2026", layout="centered")
+st.set_page_config(page_title="Dzień otwarty 18.04.2026", layout="centered")
 
 # CSS poprawiający widoczność w Dark i Light Mode - bez zbędnych znaczników
 st.markdown(
@@ -35,7 +35,7 @@ st.markdown(
     unsafe_allow_html=True
 )
 
-st.title("🧠 Test na style uczenia się")
+st.title("🧠 Test na style uczenia się: Dzień otwarty 18.04.2026")
 st.write("Wskazówka: Może się zdarzyć, że na jedno pytanie udzielisz kilku odpowiedzi. W takim przypadku zaznacz wszystkie pasujące opcje.")
 
 # Pełna baza pytań z dokumentu

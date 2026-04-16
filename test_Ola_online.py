@@ -3,7 +3,7 @@ import streamlit as st
 # Konfiguracja strony pod urządzenia mobilne
 st.set_page_config(page_title="Test na style uczenia się", layout="centered")
 
-st.title("🧠 Test na style uczenia się: dzień otwarty XIV LO w Krakowie")
+st.title("🧠 Test na style uczenia się: dzień otwarty 18.04.2026")
 st.info("Wskazówka: Może się zdarzyć, że na jedno pytanie udzielisz kilku odpowiedzi. W takim przypadku zaznacz wszystkie pasujące opcje.")
 
 # Pełna baza pytań i mapowanie odpowiedzi na style (W, S, D, K)

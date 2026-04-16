@@ -3,51 +3,22 @@ import streamlit as st
 # Konfiguracja strony pod urządzenia mobilne
 st.set_page_config(page_title="Test na style uczenia się", layout="centered")
 
-# Najsilniejszy możliwy CSS do wymuszenia zawijania tekstu
+# CSS dla poprawy wyglądu na telefonach
 st.markdown(
     """
     <style>
-    /* 1. Całkowite wyłączenie ucinania tekstu i wielokropka (...) */
-    .stMultiSelect div, .stMultiSelect span {
-        white-space: normal !important;
-        text-overflow: clip !important;
-        overflow: visible !important;
-        word-break: break-word !important;
+    .stCheckbox {
+        padding: 10px;
+        border-radius: 5px;
+        background-color: #f0f2f6;
+        margin-bottom: 5px;
     }
-
-    /* 2. Wymuszenie zawijania wewnątrz pigułek (tagów) */
-    span[data-baseweb="tag"] {
-        height: auto !important;
-        min-height: 2.5rem !important;
-        padding-top: 4px !important;
-        padding-bottom: 4px !important;
-        display: flex !important;
+    .stCheckbox:hover {
+        background-color: #e0e4eb;
     }
-
-    /* 3. Naprawa kontenera tekstu wewnątrz tagu */
-    span[data-baseweb="tag"] > span:first-child {
-        display: block !important;
-        line-height: 1.2 !important;
-        width: 100% !important;
-    }
-
-    /* 4. Zwiększenie wysokości głównego pola wyboru */
-    div[data-baseweb="select"] > div {
-        height: auto !important;
-        min-height: 3rem !important;
-        flex-wrap: wrap !important;
-    }
-
-    /* 5. Zawijanie tekstu na liście opcji przed wyborem */
-    div[role="option"] {
+    label {
+        font-size: 1rem !important;
         line-height: 1.4 !important;
-        padding-top: 10px !important;
-        padding-bottom: 10px !important;
-    }
-    
-    /* 6. Usunięcie sztywnej wysokości wiersza wewnątrz pól */
-    [data-testid="stMultiSelect"] {
-        line-height: normal !important;
     }
     </style>
     """,
@@ -55,188 +26,180 @@ st.markdown(
 )
 
 st.title("🧠 Test na style uczenia się")
-st.info("Wskazówka: Może się zdarzyć, że na jedno pytanie udzielisz kilku odpowiedzi. W takim przypadku zaznacz wszystkie pasujące opcje.")
+st.write("Wskazówka: Może się zdarzyć, że na jedno pytanie udzielisz kilku odpowiedzi. W takim przypadku zaznacz wszystkie pasujące opcje.")
 
-# Pełna baza pytań i mapowanie odpowiedzi na style (W, S, D, K)
+# Pełna baza danych z Twojego dokumentu
 pytania_data = [
     {
         "q": "1. Gdy spotykasz nieznaną ci osobę, na co zwracasz uwagę w pierwszej kolejności?",
         "options": [
-            ("co w stosunku do niej czujesz", "D"),
-            ("jak wygląda i jak jest ubrana", "W"),
-            ("w jaki sposób i co mówi, jaki ma głos", "S"),
-            ("w jaki sposób się zachowuje i co robi", "K")
+            ("co w stosunku do niej czujesz,", "D"),
+            ("jak wygląda i jak jest ubrana,", "W"),
+            ("w jaki sposób i co mówi, jaki ma głos,", "S"),
+            ("w jaki sposób się zachowuje i co robi.", "K")
         ]
     },
     {
         "q": "2. Co najczęściej zostaje ci w pamięci po kilku dniach od spotkania nieznanej ci wcześniej osoby?",
         "options": [
-            ("to, co robiliście razem, nawet jeśli zapomniałeś jej imię/nazwisko lub twarz", "K"),
-            ("jej imię/nazwisko", "S"),
-            ("to, co czułeś, będąc w jej towarzystwie, nawet jeśli zapomniałeś jej imię/nazwisko lub twarz", "D"),
-            ("jej twarz", "W")
+            ("to, co robiliście razem, nawet jeśli zapomniałeś jej imię/nazwisko lub twarz,", "K"),
+            ("jej imię/nazwisko,", "S"),
+            ("to, co czułeś, będąc w jej towarzystwie, nawet jeśli zapomniałeś jej imię/nazwisko lub twarz,", "D"),
+            ("jej twarz.", "W")
         ]
     },
     {
         "q": "3. Gdy wchodzisz do nieznanego ci pomieszczenia, na co zwracasz przede wszystkim uwagę?",
         "options": [
-            ("na jego wygląd", "W"),
-            ("na to, jak dobrze emocjonalnie i fizycznie się w nim czujesz", "D"),
-            ("na to, co się w nim dzieje i co ty mógłbyś w nim robić", "K"),
-            ("na dźwięki i rozmowy, jakie się w nim toczą", "S")
+            ("na jego wygląd,", "W"),
+            ("na to, jak dobrze emocjonalnie i fizycznie się w nim czujesz,", "D"),
+            ("na to, co się w nim dzieje i co ty mógłbyś w nim robić,", "K"),
+            ("na dźwięki i rozmowy, jakie się w nim toczą.", "S")
         ]
     },
     {
         "q": "4. Gdy uczysz się czegoś nowego, w jaki sposób robisz to najchętniej?",
         "options": [
-            ("gdy nauczyciel pozwala ci zapisywać informacje lub sporządzać rysunki, dotykać przedmiotów, pisać na klawiaturze lub robić coś rękami", "D"),
-            ("gdy nauczyciel pozwala ci robić projekty, symulacje, eksperymenty, grać w gry lub angażować się w ruch", "K"),
-            ("gdy nauczyciel daje ci coś do czytania, pokazuje ilustracje, wykresy, mapy lub szkice", "W"),
-            ("gdy nauczyciel wyjaśnia wszystko mówiąc, pozwala dyskutować i zadawać pytania", "S")
+            ("gdy nauczyciel pozwala ci zapisywać informacje lub sporządzać rysunki, dotykać przedmiotów, pisać na klawiaturze lub robić coś rękami,", "D"),
+            ("gdy nauczyciel pozwala ci robić projekty, symulacje, eksperymenty, grać w gry, odgrywać role, odtwarzać rzeczywiste sytuacje z życia, dokonywać odkryć lub też angażować się w inne działania związane z ruchem,", "K"),
+            ("gdy nauczyciel daje ci coś do czytania na papierze lub tablicy, pokazuje ci książki, ilustracje, wykresy, mapy, szkice lub przedmioty, nie każąc ci przy tym niczego mówić, pisać, ani o niczym dyskutować,", "W"),
+            ("gdy nauczyciel wyjaśnia wszystko, mówiąc lub wygłaszając wykład, pozwala ci przedyskutować temat i zadawać pytania, nie każąc ci przy tym na nic patrzeć, niczego czytać, pisać ani robić.", "S")
         ]
     },
     {
         "q": "5. Gdy uczysz czegoś innych, co zwykle robisz?",
         "options": [
-            ("objaśniasz wszystko werbalnie bez wykorzystania żadnych materiałów graficznych", "S"),
-            ("rysujesz coś, piszesz lub w inny sposób używasz rąk do wyjaśniania", "D"),
-            ("demonstrujesz coś, robiąc to lub każesz uczniom robić to wspólnie z tobą", "K"),
-            ("dajesz im coś do oglądania, na przykład przedmiot, ilustrację lub wykres", "W")
+            ("objaśniasz wszystko werbalnie, nie pokazując żadnych materiałów graficznych,", "S"),
+            ("rysujesz coś, piszesz lub w inny sposób używasz rąk do wyjaśniania,", "D"),
+            ("demonstrujesz coś, robiąc to lub każesz uczniom robić to wspólnie z tobą,", "K"),
+            ("dajesz im coś do oglądania, na przykład jakiś przedmiot, ilustrację lub wykres, udzielając przy tym jedynie krótkiego werbalnego wyjaśnienia lub nie udzielając go wcale, dopuszczając lub nie do krótkiej dyskusji.", "W")
         ]
     },
     {
         "q": "6. Jaki rodzaj książek czytasz najchętniej?",
         "options": [
-            ("książki zawierające informacje faktograficzne, historyczne lub dużo dialogów", "S"),
-            ("krótkie książki z wartką akcją lub pomagające doskonalić hobby i sport", "K"),
-            ("książki o uczuciach i emocjach bohaterów oraz poradniki o relacjach", "D"),
-            ("książki, które zawierają opisy pomagające ci zobaczyć to, co się dzieje", "W")
+            ("książki zawierające informacje faktograficzne, historyczne lub dużo dialogów,", "S"),
+            ("krótkie książki z wartką akcją lub książki, które pomagają ci doskonalić umiejętności w sporcie, hobby czy też rozwijać jakiś talent,", "K"),
+            ("książki o uczuciach i emocjach bohaterów, poradniki, książki o emocjach i związkach międzyludzkich lub książki na temat tego, jak poprawić stan twojego ciała i umysłu,", "D"),
+            ("książki, które zawierają opisy pomagające ci zobaczyć to, co się dzieje.", "W")
         ]
     },
     {
         "q": "7. Którą z poniższych czynności wykonujesz najchętniej w czasie wolnym?",
         "options": [
-            ("czytasz książkę lub przeglądasz czasopismo", "W"),
-            ("słuchasz muzyki, radia lub sam muzykujesz", "S"),
-            ("piszesz, rysujesz lub robisz coś rękami", "D"),
-            ("uprawiasz sport, budujesz coś lub grasz w grę wymagającą ruchu", "K")
+            ("czytasz książkę lub przeglądasz czasopismo,", "W"),
+            ("słuchasz książki nagranej na kasetę, rozmowy w radiu, słuchasz muzyki lub sam muzykujesz,", "S"),
+            ("piszesz, rysujesz, piszesz na maszynie/komputerze lub robisz coś rękami,", "D"),
+            ("uprawiasz sport, budujesz coś lub grasz w grę wymagającą ruchu.", "K")
         ]
     },
     {
-        "q": "8. Które ze stwierdzeń najlepiej charakteryzuje sposób, w jaki czytasz lub uczysz się?",
+        "q": "8. Które z poniższych stwierdzeń najlepiej charakteryzuje sposób, w jaki czytasz lub uczysz się?",
         "options": [
-            ("musisz czuć się wygodnie; dekoncentrują cię negatywne uczucia innych", "D"),
-            ("musisz czuć się wygodnie; dekoncentruje cię ruch innych osób w pomieszczeniu", "K"),
-            ("potrafisz się uczyć przy muzyce i dźwiękach, umiesz się od nich odseparować", "W"),
-            ("nie potrafisz się uczyć przy muzyce i dźwiękach, nie umiesz się od nich odseparować", "S")
+            ("musisz czuć się wygodnie, rozluźniony; potrafisz pracować zarówno przy muzyce, jak i w ciszy, jednak dekoncentrują cię negatywne uczucia innych,", "D"),
+            ("musisz czuć się wygodnie, rozluźniony; potrafisz pracować zarówno przy muzyce, jak i w ciszy, jednak dekoncentruje cię działalność i ruchy innych osób znajdujących się w tym samym pomieszczeniu,", "K"),
+            ("potrafisz się uczyć, gdy słychać muzykę, inne dźwięki lub rozmowę, ponieważ umiesz się od nich odseparować,", "W"),
+            ("nie potrafisz się uczyć, gdy w twoim pobliżu słychać muzykę, inne dźwięki lub rozmowę, ponieważ nie umiesz się od nich odseparować.", "S")
         ]
     },
     {
         "q": "9. Gdy z kimś rozmawiasz, gdzie kierujesz wzrok?",
         "options": [
-            ("spoglądasz krótko na rozmówcę, po czym wzrok wędruje na prawo i lewo", "S"),
-            ("patrzysz na twarz rozmówcy i chcesz, by on patrzył na twoją", "W"),
-            ("spoglądasz krótko na rozmówcę, po czym patrzysz w dół lub w bok", "D"),
-            ("rzadko spoglądasz na rozmówcę, patrzysz głównie w dół lub reagujesz na ruch", "K")
+            ("spoglądasz jedynie krótko na rozmówcę, po czym twój wzrok wędruje na prawo i lewo,", "S"),
+            ("patrzysz na twarz rozmówcy, chcesz także, by ta osoba patrzyła na twoją twarz, gdy do niej mówisz,", "W"),
+            ("spoglądasz jedynie krótko na rozmówcę, by zobaczyć jego wyraz twarzy, po czym spoglądasz w dół lub w bok,", "D"),
+            ("rzadko spoglądasz na rozmówcę, patrzysz głównie w dół lub w bok, jeśli jednak pojawi się jakiś ruch lub działanie, natychmiast spoglądasz w tamtym kierunku.", "K")
         ]
     },
     {
         "q": "10. Które z poniższych stwierdzeń najlepiej do ciebie pasuje?",
         "options": [
-            ("trudno ci wysiedzieć nieruchomo, potrzebujesz dużo ruchu", "K"),
-            ("zwracasz uwagę na kolory, kształty i wzory w miejscach, w których jesteś", "W"),
-            ("nie znosisz ciszy i nucisz lub włączasz radio, by mieć bodźce słuchowe", "S"),
-            ("jesteś wrażliwy na uczucia innych i potrzebujesz akceptacji, by pracować", "D")
+            ("trudno ci wysiedzieć nieruchomo w jednym miejscu, potrzebujesz dużo ruchu, a jeśli już musisz siedzieć garbisz się, wiercisz, stukasz w podłogę butami lub często niespokojnie poruszasz nogami,", "K"),
+            ("zwracasz uwagę na kolory, kształty, wzory i desenie w miejscach, w których się znajdziesz; masz dobre oko do barw i kształtów,", "W"),
+            ("nie znosisz ciszy i nucisz coś, podśpiewujesz lub głośno mówisz; włączasz radio, telewizor lub odtwarzacz, by mieć bodźce słuchowe,", "S"),
+            ("jesteś wrażliwy na uczucia innych ludzi, twoje własne uczucia łatwo ulegają zranieniu; potrzebujesz bycia akceptowanym, by pracować.", "D")
         ]
     },
     {
         "q": "11. Które z poniższych stwierdzeń najlepiej do ciebie pasuje?",
         "options": [
-            ("płaczesz podczas wzruszających scen w kinie lub książce", "D"),
-            ("niepokoi cię zła wymowa u innych lub dźwięk kapiącego kranu", "S"),
-            ("zauważasz nieład w ubiorze lub włosach u innych i chcesz to naprawić", "W"),
-            ("niepokoisz się i czujesz nieprzyjemnie, gdy musisz siedzieć nieruchomo", "K")
+            ("płaczesz podczas wzruszających scen w kinie lub czytając wzruszającą książkę,", "D"),
+            ("niepokoi cię, gdy ktoś nie potrafi dobrze się wysławiać, jesteś wrażliwy na odgłos kapiącego kranu lub odgłosy urządzeń domowych,", "S"),
+            ("zwracasz uwagę na nieodpowiednie dopasowanie części garderoby danej osoby lub na to, że jej włosy są w nieładzie,", "W"),
+            ("niepokoisz się i czujesz się nieprzyjemnie, gdy jesteś zmuszony siedzieć nieruchomo; nie potrafisz przebywać zbyt długo w jednym miejscu.", "K")
         ]
     },
     {
         "q": "12. Co wywołuje u ciebie największy niepokój?",
         "options": [
-            ("miejsce, w którym jest za cicho", "S"),
-            ("miejsce, w którym nie czujesz się dobrze fizycznie lub emocjonalnie", "D"),
-            ("miejsce, w którym nie wolno nic robić lub jest za mało miejsca na ruch", "K"),
-            ("miejsce, w którym panuje bałagan i nieład", "W")
+            ("miejsce, w którym jest za cicho,", "S"),
+            ("miejsce, w którym nie czujesz się dobrze fizycznie lub emocjonalnie,", "D"),
+            ("miejsce, w którym nie wolno niczego robić lub jest za mało przestrzeni na ruch,", "K"),
+            ("miejsce, w którym panuje bałagan i nieład.", "W")
         ]
     },
     {
         "q": "13. Czego najbardziej nie lubisz, podczas gdy ktoś cię uczy?",
         "options": [
-            ("patrzenia i słuchania w bezruchu", "K"),
-            ("niemożności rysowania, dotykania wszystkiego lub robienia notatek", "D"),
-            ("słuchania wykładu, na którym nie wykorzystuje się pomocy wizualnych", "W"),
-            ("czytania po cichu bez żadnych werbalnych wyjaśnień lub dyskusji", "S")
+            ("patrzenia i słuchania w bezruchu,", "K"),
+            ("niemożności rysowania, dotykania wszystkiego rękami lub sporządzania notatek,", "D"),
+            ("słuchania wykładu, na którym nie wykorzystuje się żadnych pomocy wizualnych,", "W"),
+            ("czytania po cichu, bez żadnych werbalnych wyjaśnień czy dyskusji.", "S")
         ]
     },
     {
         "q": "14. Jakie wspomnienia z szczęśliwego momentu utkwiły ci w pamięci?",
         "options": [
-            ("to, co słyszałeś: dialogi, rozmowy i dźwięki wokół ciebie", "S"),
-            ("to, co widziałeś: wygląd ludzi, miejsc czy przedmiotów", "W"),
-            ("to, co robiłeś: ruchy ciała i twoje dokonania", "K"),
-            ("wrażenia dotykowe oraz to, jak czułeś się fizycznie i emocjonalnie", "D")
+            ("to, co słyszałeś, na przykład dialogi i rozmowy, to, co powiedziałeś, oraz dźwięki wokół ciebie,", "S"),
+            ("to, co widziałeś, na przykład wygląd ludzi, miejsc czy przedmiotów,", "W"),
+            ("to, co robiłeś, ruchy twojego ciała, twoje dokonania,", "K"),
+            ("wrażenia dotykowe na skórze i ciele, a także to, jak czułeś się fizycznie i emocjonalnie.", "D")
         ]
     },
     {
         "q": "15. Jakie wspomnienia z urlopu lub wycieczki utkwiły ci w pamięci?",
         "options": [
-            ("to, co robiłeś: ruchy ciała i twoje dokonania", "K"),
-            ("wrażenia dotykowe oraz to, jak czułeś się fizycznie i emocjonalnie", "D"),
-            ("to, co słyszałeś: dialogi, rozmowy i dźwięki wokół ciebie", "S"),
-            ("to, co widziałeś: wygląd ludzi, miejsc czy przedmiotów", "W")
+            ("to, co robiłeś, ruchy twojego ciała, twoje dokonania,", "K"),
+            ("wrażenia dotykowe na skórze i ciele, a także to, jak czułeś się fizycznie i emocjonalnie,", "D"),
+            ("to, co słyszałeś, na przykład dialogi i rozmowy, to, co powiedziałeś, oraz dźwięki wokół ciebie,", "S"),
+            ("to, co widziałeś, na przykład wygląd ludzi, miejsc czy przedmiotów.", "W")
         ]
     },
     {
-        "q": "16. W którym z opisanych miejsc czułbyś się najlepiej?",
+        "q": "16. W którym z niżej opisanych miejsc czułbyś się najlepiej?",
         "options": [
-            ("miejsce do czytania, oglądania obrazów, map i rozwiązywania zagadek wizualnych", "W"),
-            ("miejsce do rzemiosła, rzeźbienia, budowania modeli i prac ręcznych", "D"),
-            ("miejsce do słuchania muzyki, śpiewu, głośnych gier słownych i dyskusji", "S"),
-            ("miejsce do uprawiania sportu, eksperymentów i gier ruchowych", "K")
+            ("miejsce, w którym możesz czytać; oglądać obrazy; rozwiązywać zagadek wizualne; grać w gry słowne; zajmować się dekorowaniem,", "W"),
+            ("miejsce, w którym możesz rysować, malować, rzeźbić; tworzyć coś na piśmie; wykonywać czynności przy użyciu rąk,", "D"),
+            ("miejsce, w którym możesz słuchać nagrań, talk shows; grać na instrumencie lub śpiewać; bawić się głośno w gry słowne,", "S"),
+            ("miejsce, w którym możesz uprawiać sport; odgrywać role; robić projekty ruchowe i eksperymenty; budować coś.", "K")
         ]
     },
     {
         "q": "17. Gdybyś miał zapamiętać nowe słowo, zrobiłbyś to najlepiej:",
         "options": [
-            ("widząc je", "W"),
-            ("słysząc je", "S"),
-            ("zapisując je", "D"),
-            ("odtwarzając je w umyśle lub fizycznie", "K")
+            ("widząc je,", "W"),
+            ("słysząc je,", "S"),
+            ("zapisując je,", "D"),
+            ("odtwarzając to słowo w umyśle lub fizycznie.", "K")
         ]
     }
 ]
 
-# Tworzenie formularza testu
-with st.form("learning_styles_test"):
+with st.form("test_form"):
     all_responses = []
-    
     for i, item in enumerate(pytania_data):
         st.subheader(item["q"])
-        selected = st.multiselect(
-            "Wybierz odpowiedzi:",
-            options=[opt[0] for opt in item["options"]],
-            key=f"question_{i}"
-        )
-        
-        for s in selected:
-            code = next(opt[1] for opt in item["options"] if opt[0] == s)
-            all_responses.append(code)
+        for label, code in item["options"]:
+            # Używamy checkboxów zamiast multiselect, aby tekst nigdy nie był ucinany
+            if st.checkbox(label, key=f"q_{i}_{label}"):
+                all_responses.append(code)
         st.write("---")
+    
+    submit = st.form_submit_button("Oblicz wyniki")
 
-    submit_button = st.form_submit_button("Zakończ test i zobacz wyniki")
-
-# Wyniki
-if submit_button:
+if submit:
     if not all_responses:
-        st.warning("Proszę zaznaczyć przynajmniej jedną odpowiedź przed zakończeniem.")
+        st.error("Proszę zaznaczyć przynajmniej jedną odpowiedź.")
     else:
         scores = {
             "Wzrokowiec (W)": all_responses.count("W"),
@@ -248,12 +211,11 @@ if submit_button:
         st.header("📊 Twoje Wyniki")
         st.bar_chart(scores)
         
-        max_score = max(scores.values())
-        winners = [k for k, v in scores.items() if v == max_score]
+        max_val = max(scores.values())
+        dominance = [k for k, v in scores.items() if v == max_val]
         
-        st.success(f"Twój dominujący styl uczenia się to: **{', '.join(winners)}**!")
-        st.write("Wiesz już, jaki styl uczenia się dominuje u Ciebie. Teraz dowiedz się, co to właściwie oznacza!")
+        st.success(f"Twój dominujący styl uczenia się to: **{', '.join(dominance)}**")
+        st.write("Teraz dowiedz się, co to właściwie oznacza!")
 
-# Stopka z autorstwem
 st.markdown("---")
 st.caption("Test do wersji cyfrowej przygotowany przez Aleksandrę Kopystyńską (pedagog specjalny) przy pomocy Gemini")

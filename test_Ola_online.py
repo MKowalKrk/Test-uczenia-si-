@@ -3,30 +3,43 @@ import streamlit as st
 # Konfiguracja strony pod urządzenia mobilne
 st.set_page_config(page_title="Test na style uczenia się", layout="centered")
 
-# Bardziej agresywny CSS do zawijania długich tekstów
+# Maksymalnie agresywny CSS, aby wymusić zawijanie tekstu i powiększenie pola
 st.markdown(
     """
     <style>
-    /* Zawijanie tekstu w wybranych polach (tagach) */
+    /* 1. Zawijanie tekstu wewnątrz wybranych opcji (tagów) */
     span[data-baseweb="tag"] {
         white-space: normal !important;
         height: auto !important;
-        padding-top: 5px !important;
-        padding-bottom: 5px !important;
+        min-height: 30px !important;
+        padding: 5px 10px !important;
+        display: inline-flex !important;
     }
-    /* Zawijanie tekstu wewnątrz tagów */
-    span[data-baseweb="tag"] > span {
+    
+    /* 2. Usunięcie ucinania tekstu i wielokropka (...) wewnątrz tagów */
+    span[data-baseweb="tag"] > span:first-child {
+        overflow: visible !important;
+        text-overflow: clip !important;
         white-space: normal !important;
         display: block !important;
+        width: 100% !important;
     }
-    /* Zawijanie tekstu na liście rozwijanej opcji */
-    div[role="option"] {
+
+    /* 3. Powiększenie głównego pola wyboru, aby dopasowało się do zawartości */
+    div[data-baseweb="select"] > div {
+        height: auto !important;
+        min-height: 45px !important;
+    }
+
+    /* 4. Zawijanie tekstu na liście rozwijanej (podpowiedzi) */
+    div[role="option"] > div {
         white-space: normal !important;
         line-height: 1.4 !important;
     }
-    /* Poprawa widoczności etykiet wewnątrz selektora */
-    div[data-baseweb="select"] div {
-        white-space: normal !important;
+    
+    /* Dodatkowe wyrównanie dla urządzeń mobilnych */
+    .stMultiSelect {
+        margin-bottom: 20px;
     }
     </style>
     """,
@@ -212,7 +225,7 @@ with st.form("learning_styles_test"):
 
     submit_button = st.form_submit_button("Zakończ test i zobacz wyniki")
 
-# Wyniki i stopka
+# Wyniki
 if submit_button:
     if not all_responses:
         st.warning("Proszę zaznaczyć przynajmniej jedną odpowiedź przed zakończeniem.")
@@ -233,6 +246,6 @@ if submit_button:
         st.success(f"Twój dominujący styl uczenia się to: **{', '.join(winners)}**!")
         st.write("Wiesz już, jaki styl uczenia się dominuje u Ciebie. Teraz dowiedz się, co to właściwie oznacza!")
 
-# Informacja o autorstwie wersji cyfrowej
+# Stopka z autorstwem
 st.markdown("---")
 st.caption("Test do wersji cyfrowej przygotowany przez Aleksandrę Kopystyńską (pedagog specjalny) przy pomocy Gemini")

@@ -206,4 +206,4 @@ if submit_button:
 
 # Informacja o autorstwie wersji cyfrowej
 st.markdown("---")
-st.caption("Test do wersji cyfrowej przygotowany przez Aleksandrę Kopystyńską przy pomocy Gemini")
+st.caption("Test do wersji cyfrowej przygotowany przez Aleksandrę Kopystyńską (pedagog specjalny) przy pomocy Gemini")
